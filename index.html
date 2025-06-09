@@ -1,71 +1,410 @@
-<uL>
-  <h1>OSI七层模型</h1>
-  <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\OSI七层模型\应用层.html">应用层</a></li>
-  <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\OSI七层模型\表示层.html">表示层</a></li>
-  <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\OSI七层模型\会话层.html">会话层</a></li>
-  <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\OSI七层模型\传输层.html">传输层</a></li>
-  <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\OSI七层模型\网络层.html">网络层</a></li>
-  <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\OSI七层模型\数据链路层.html">数据链路层</a></li>
-  <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\OSI七层模型\物理层.html">物理层</a></li>
-  <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\OSI七层模型\实验-分析请求端数据传输(OSI)">ensp实验-分析请求端数据传输(OSI)</a></li>
-  <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\OSI七层模型\实验-分析请求端数据传输(OSI)">ensp实验-分析请求端数据传输(OSI)</a></li>
-
-   <h1>TCP/IP模型</h1>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\TCP-IP协议\应用层.html">应用层</a></li>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\TCP-IP协议\传输层.html">传输层</a></li>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\TCP-IP协议\网络层.html">网络层</a></li>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\TCP-IP协议\数据链路层.html">数据链路层</a></li>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFC碰一碰 - 快递柜取件</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#36BFFA',
+            accent: '#722ED1',
+            success: '#52C41A',
+            warning: '#FAAD14',
+            neutral: {
+              100: '#F2F3F5',
+              200: '#E5E6EB',
+              300: '#C9CDD4',
+              400: '#86909C',
+              500: '#4E5969',
+              600: '#272E3B',
+              700: '#1D2129',
+              800: '#0F172A',
+            }
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .nfc-pulse {
+        animation: nfcPulse 2s infinite;
+      }
+      @keyframes nfcPulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(114, 46, 209, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 15px rgba(114, 46, 209, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(114, 46, 209, 0);
+        }
+      }
+      .nfc-pulse-success {
+        animation: nfcPulseSuccess 2s infinite;
+      }
+      @keyframes nfcPulseSuccess {
+        0% {
+          box-shadow: 0 0 0 0 rgba(82, 196, 26, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 15px rgba(82, 196, 26, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(82, 196, 26, 0);
+        }
+      }
+      .nfc-wave {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: rgba(114, 46, 209, 0.1);
+        opacity: 0;
+        animation: nfcWave 2s infinite;
+      }
+      .nfc-wave-2 {
+        animation-delay: 0.5s;
+      }
+      .nfc-wave-3 {
+        animation-delay: 1s;
+      }
+      @keyframes nfcWave {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1.5);
+          opacity: 0;
+        }
+      }
+      .nfc-bounce {
+        animation: nfcBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      @keyframes nfcBounce {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .nfc-connect {
+        animation: nfcConnect 1s forwards;
+      }
+      @keyframes nfcConnect {
+        0% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(0, -15px);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+      .device-tilt {
+        transform: perspective(1000px) rotateX(5deg) rotateY(10deg);
+        transform-style: preserve-3d;
+        transition: transform 0.5s ease;
+      }
+      .device-tilt:hover {
+        transform: perspective(1000px) rotateX(3deg) rotateY(7deg);
+      }
+      .nfc-icon-shadow {
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+      }
+      .cabinet-shake {
+        animation: cabinetShake 0.3s ease-in-out;
+      }
+      @keyframes cabinetShake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+      }
+      .drawer-open {
+        animation: drawerOpen 0.5s ease-out forwards;
+      }
+      @keyframes drawerOpen {
+        0% { transform: translateY(0); box-shadow: 0 0 0 rgba(0,0,0,0.2); }
+        100% { transform: translateY(5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+      }
+      .success-popup {
+        animation: successPopup 0.5s ease-out forwards;
+      }
+      @keyframes successPopup {
+        0% { transform: scale(0.8); opacity: 0; }
+        70% { transform: scale(1.05); }
+        100% { transform: scale(1); opacity: 1; }
+      }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-neutral-800 to-neutral-700 min-h-screen flex items-center justify-center p-4 font-inter text-neutral-100">
+  <div class="max-w-4xl mx-auto text-center">
+    <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+      NFC 碰一碰 - 快递柜取件演示
+    </h1>
+    <p class="text-neutral-300 mb-10 max-w-xl mx-auto">
+      体验使用NFC技术触碰快递柜完成取件的便捷过程
+    </p>
+    
+    <!-- 快递柜和手机交互区域 -->
+    <div class="relative flex justify-center items-center min-h-[400px]">
+      <!-- 快递柜 -->
+      <div id="courierCabinet" class="absolute left-0 md:left-10 bg-neutral-700 rounded-lg overflow-hidden w-48 h-64 md:w-64 md:h-80 monitor-shadow">
+        <!-- 快递柜顶部 -->
+        <div class="h-6 bg-neutral-600 flex items-center justify-center">
+          <span class="text-xs font-medium text-neutral-200">智能快递柜</span>
+        </div>
+        
+        <!-- 快递柜主体 -->
+        <div class="p-2">
+          <!-- 柜门网格 -->
+          <div class="grid grid-cols-2 gap-2">
+            <!-- 柜门1 -->
+            <div class="bg-neutral-600 h-16 rounded-sm flex items-center justify-center cursor-pointer hover:bg-neutral-500 transition-colors">
+              <div class="text-xs text-neutral-300">柜门 1</div>
+            </div>
+            
+            <!-- 柜门2 (带包裹) -->
+            <div id="targetDrawer" class="bg-neutral-600 h-16 rounded-sm flex items-center justify-center cursor-pointer hover:bg-neutral-500 transition-colors relative overflow-hidden">
+              <div class="absolute inset-0 bg-success/20 opacity-0" id="drawerHighlight"></div>
+              <div class="text-xs text-neutral-300 relative z-10">柜门 2</div>
+              <div class="absolute bottom-1 right-1 w-2 h-2 rounded-full bg-warning"></div>
+            </div>
+            
+            <!-- 柜门3 -->
+            <div class="bg-neutral-600 h-16 rounded-sm flex items-center justify-center cursor-pointer hover:bg-neutral-500 transition-colors">
+              <div class="text-xs text-neutral-300">柜门 3</div>
+            </div>
+            
+            <!-- 柜门4 -->
+            <div class="bg-neutral-600 h-16 rounded-sm flex items-center justify-center cursor-pointer hover:bg-neutral-500 transition-colors">
+              <div class="text-xs text-neutral-300">柜门 4</div>
+            </div>
+          </div>
+          
+          <!-- 控制面板 -->
+          <div class="mt-2 bg-neutral-600 h-12 rounded-sm p-1">
+            <div class="bg-neutral-800 h-full rounded flex items-center justify-center">
+              <div class="text-xs text-neutral-300" id="cabinetDisplay">
+                请触碰NFC区域取件
+              </div>
+            </div>
+            
+            <!-- NFC感应区 -->
+            <div id="cabinetNfcArea" class="absolute bottom-2 right-2 w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center cursor-pointer">
+              <i class="fa fa-nfc text-xs text-accent"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 手机 -->
+      <div id="mobileDevice" class="device-tilt absolute right-0 md:right-10 bg-neutral-700 rounded-xl p-1 w-28 h-52 monitor-shadow flex flex-col items-center">
+        <div class="w-full h-1 bg-neutral-500 rounded-t"></div>
+        <div class="w-full flex-1 bg-neutral-800 rounded-b overflow-hidden relative">
+          <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10"></div>
+          
+          <!-- 手机状态栏 -->
+          <div class="absolute top-0 left-0 right-0 h-4 bg-neutral-900/50 backdrop-blur-sm flex items-center justify-between px-1 text-[8px]">
+            <div class="flex items-center space-x-0.5">
+              <i class="fa fa-signal"></i>
+              <i class="fa fa-wifi"></i>
+            </div>
+            <div>14:30</div>
+            <div class="flex items-center space-x-0.5">
+              <i class="fa fa-battery-three-quarters"></i>
+            </div>
+          </div>
+          
+          <!-- 手机内容 -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center p-2 pt-6">
+            <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mb-2">
+              <i class="fa fa-qrcode text-lg text-primary"></i>
+            </div>
+            <p class="text-[8px] text-neutral-300 mb-1">取件码: 8634</p>
+            <div class="text-[7px] text-neutral-400 mb-2">包裹已送达</div>
+            
+            <!-- 手机NFC区域 -->
+            <div id="mobileNfcArea" class="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+              <div class="nfc-wave"></div>
+              <div class="nfc-wave nfc-wave-2"></div>
+              <i class="fa fa-nfc text-xs text-accent nfc-icon-shadow"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 连接状态指示器 -->
+      <div id="connectionStatus" class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-neutral-800/90 backdrop-blur-sm rounded-full p-3 nfc-pulse">
+        <div class="flex items-center justify-center space-x-1.5">
+          <i class="fa fa-link text-success"></i>
+          <span class="text-xs font-medium text-success">验证中</span>
+        </div>
+      </div>
+      
+      <!-- 取件成功提示 -->
+      <div id="successMessage" class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-success/90 backdrop-blur-sm rounded-lg p-4 max-w-xs success-popup">
+        <div class="flex items-center justify-center flex-col">
+          <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-2">
+            <i class="fa fa-check text-2xl text-white"></i>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">取件成功</h3>
+          <p class="text-xs text-white/80 text-center">柜门2已打开</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 交互按钮 -->
+    <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+      <button id="simulateTouch" class="px-6 py-3 bg-accent hover:bg-accent/90 text-white rounded-lg shadow-lg transition-all duration-300 flex items-center justify-center">
+        <i class="fa fa-hand-pointer-o mr-2"></i> 模拟NFC取件
+      </button>
+      <button id="resetDemo" class="px-6 py-3 bg-neutral-600 hover:bg-neutral-500 text-white rounded-lg shadow-lg transition-all duration-300 flex items-center justify-center">
+        <i class="fa fa-refresh mr-2"></i> 重置演示
+      </button>
+    </div>
+    
+    <div class="mt-10 p-4 bg-neutral-800/50 rounded-lg backdrop-blur-sm">
+      <h3 class="text-lg font-semibold mb-3 text-neutral-200">NFC取件流程说明</h3>
+      <div class="space-y-2 text-sm text-neutral-400 leading-relaxed">
+        <p>1. 将支持NFC功能的手机靠近快递柜的NFC感应区</p>
+        <p>2. 系统自动验证您的身份信息</p>
+        <p>3. 验证通过后，对应包裹的柜门会自动打开</p>
+        <p>4. 取走您的包裹，关门完成取件流程</p>
+      </div>
+    </div>
+  </div>
   
-   <h1>设备地址</h1>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\设备地址\IP地址.html">IP地址</a></li>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\设备地址\MAC地址.html">MAC地址</a></li>
-
-   <h1>数据传输方式</h1>
-   <hr>
-   <h3>传输方向</h3>
-   <li><a href="">单工</a></li>
-   <li><a href="">半双工</a></li>
-   <li><a href="">全双工</a></li>
-   <hr>
-   <h3>同步方式</h3>
-   <li><a href="">同步传输</a></li>
-   <li><a href="">异步传输</a></li>
-   <hr>
-   <h3>连接方式</h3>
-   <li><a href="">面向连接</a></li>
-   <li><a href="">无连接</a></li>
-   <hr>
-   <h3>信号类型</h3>
-    <li><a href="">模拟信号</a></li>
-    <li><a href="">数字信号</a></li>
-   <hr>
-   <h3>网路层次</h3>
-    <li><a href="">物理层传输</a></li>
-    <li><a href="">数据链路层传输</a></li>
-    <li><a href="">网路层传输</a></li>
-   <h3>传输媒介</h3>
-    <li><a href="">有线传输</a></li>
-   <li><a href="">无线传输</a></li>
-   <hr>
-   <h3>数据分发方式</h3>
-   <li><a href="">单播</a></li>
-   <li><a href="">组播</a></li>
-   <li><a href="">广播</a></li>
-   
-   
-   
-
-   <h1>网络设备</h1>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\网络设备\终端.html">终端</a></li>
-   <hr>
-   <h3>路由器</h3>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\网络设备\路由器.html">路由器的概述</a></li>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\网络设备\路由器.html">路由表</a></li>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\网络设备\路由器.html">路由表优先级</a></li>
-   <hr>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\网络设备\路由.html">交换机的概述</a></li>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\网络设备\路由器.html">MAC表</a></li>
-   <hr>
-   <li><a href="C:\Users\rzd28\Desktop\计算机网络\计算机网络基础知识\网络设备\集线器.html">集线器</a></li>
- 
-</ul>
+  <script>
+    // 获取DOM元素
+    const courierCabinet = document.getElementById('courierCabinet');
+    const mobileDevice = document.getElementById('mobileDevice');
+    const cabinetNfcArea = document.getElementById('cabinetNfcArea');
+    const mobileNfcArea = document.getElementById('mobileNfcArea');
+    const connectionStatus = document.getElementById('connectionStatus');
+    const successMessage = document.getElementById('successMessage');
+    const targetDrawer = document.getElementById('targetDrawer');
+    const drawerHighlight = document.getElementById('drawerHighlight');
+    const cabinetDisplay = document.getElementById('cabinetDisplay');
+    const simulateTouchBtn = document.getElementById('simulateTouch');
+    const resetDemoBtn = document.getElementById('resetDemo');
+    
+    // 模拟NFC碰一碰取件
+    simulateTouchBtn.addEventListener('click', () => {
+      // 重置状态
+      resetDemo();
+      
+      // 设备移动动画
+      mobileDevice.style.transition = 'transform 0.5s ease';
+      
+      // 手机靠近快递柜动画
+      setTimeout(() => {
+        mobileDevice.classList.add('nfc-bounce');
+        cabinetNfcArea.classList.add('nfc-pulse');
+        mobileNfcArea.classList.add('nfc-pulse');
+        
+        // 显示连接状态
+        setTimeout(() => {
+          connectionStatus.classList.remove('hidden');
+          cabinetDisplay.textContent = '正在验证...';
+          
+          // 模拟验证过程
+          setTimeout(() => {
+            connectionStatus.innerHTML = `
+              <div class="flex items-center justify-center space-x-1.5">
+                <i class="fa fa-check-circle text-success"></i>
+                <span class="text-xs font-medium text-success">验证通过</span>
+              </div>
+            `;
+            
+            // 快递柜震动
+            courierCabinet.classList.add('cabinet-shake');
+            
+            // 目标柜门高亮
+            drawerHighlight.classList.remove('opacity-0');
+            drawerHighlight.classList.add('opacity-100');
+            
+            // 更新显示
+            cabinetDisplay.textContent = '柜门2已打开';
+            
+            // 目标柜门打开动画
+            setTimeout(() => {
+              targetDrawer.classList.add('drawer-open');
+              
+              // 隐藏连接状态，显示成功提示
+              setTimeout(() => {
+                connectionStatus.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                
+                // 延迟后隐藏成功提示
+                setTimeout(() => {
+                  successMessage.classList.add('hidden');
+                }, 2500);
+              }, 1000);
+            }, 800);
+          }, 1500);
+        }, 800);
+      }, 300);
+      
+      // 手机位置调整
+      mobileDevice.style.transform = 'perspective(1000px) rotateX(5deg) rotateY(10deg) translate(-30px, -10px)';
+    });
+    
+    // 重置演示
+    resetDemoBtn.addEventListener('click', resetDemo);
+    
+    function resetDemo() {
+      // 重置设备状态
+      mobileDevice.style.transform = 'perspective(1000px) rotateX(5deg) rotateY(10deg)';
+      
+      // 隐藏状态指示器
+      connectionStatus.classList.add('hidden');
+      connectionStatus.innerHTML = `
+        <div class="flex items-center justify-center space-x-1.5">
+          <i class="fa fa-link text-success"></i>
+          <span class="text-xs font-medium text-success">验证中</span>
+        </div>
+      `;
+      
+      successMessage.classList.add('hidden');
+      
+      // 重置快递柜状态
+      courierCabinet.classList.remove('cabinet-shake');
+      cabinetDisplay.textContent = '请触碰NFC区域取件';
+      
+      // 重置柜门状态
+      targetDrawer.classList.remove('drawer-open');
+      drawerHighlight.classList.add('opacity-0');
+      drawerHighlight.classList.remove('opacity-100');
+      
+      // 重置NFC区域
+      cabinetNfcArea.classList.remove('nfc-pulse');
+      mobileNfcArea.classList.remove('nfc-pulse');
+    }
+  </script>
+</body>
+</html>
+    
